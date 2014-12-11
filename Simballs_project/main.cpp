@@ -30,7 +30,6 @@ int main(){
 //--------------------------------------------------------------------------
 		for ( i = 0;  i < 1000000 ; ++i) {
 			simball_Left.ReadSimBallState(simball.handle[1]);
-//			simball_Left->ReadSimBallState(simball.handle[1]);
 		    cout << simball.handle[1] << " "<< int (simball_Left.AYaw);
 		    cout << " " << int (simball_Left.APitch);
 		    cout << " " << int (simball_Left.AInsertion);

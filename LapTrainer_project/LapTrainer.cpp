@@ -27,6 +27,16 @@ void LapTrainer::createScene(void)
 		Ogre::SceneNode* child = nodPenguin->createChildSceneNode("MoveNode");
 		child->attachObject(entPenguin);
 		child->translate(-150,0,0);
+
+		//Create penguin
+		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("Penguin2", "instrument_stick.mesh");
+		entPenguin2 -> setCastShadows(true);
+		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("PenguinNode2", Ogre::Vector3( -10, 5, 0 ));
+		nodPenguin2->scale( .1, .1, .1); 
+		//nodPenguin->attachObject(entPenguin);
+		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNode2");
+		child2->attachObject(entPenguin2);
+		child2->translate(-150,0,0);
 }
 //-------------------------------------------------------------------------------------
 //Creation of frame listner
@@ -60,27 +70,89 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 
 	//Get Simballs values
-	//Yaw
-	static int mYaw = 0;
+	
 	//Load data symbols 
 	simball_Left.ReadSimBallState(simball.handle[1]);
-	int YawCurrent = simball_Left.AYaw;
+	simball_Right.ReadSimBallState(simball.handle[2]);
+	//simball_camera.ReadSimBallState(simball.handle[3]);
+
+	//-------------------Left Stick-----------------------------------------------------------------
+	//Yaw
+	static int mYawL = 0;
+	int YawCurrentL = simball_Left.AYaw;
 	//Calculate yaw difference
-	if (YawCurrent != mYaw){
-		mSceneMgr->getSceneNode("PenguinNode")->yaw(Ogre::Degree(YawCurrent - mYaw));
-		mYaw = YawCurrent;
+	if (YawCurrentL != mYawL){
+		mSceneMgr->getSceneNode("PenguinNode")->yaw(Ogre::Degree(YawCurrentL - mYawL));
+		mYawL = YawCurrentL;
 	}
 
 	//Pitch
-	static int mPitch = 0;
-	int PitchCurrent = simball_Left.APitch;
+	static int mPitchL = 0;
+	int PitchCurrentL = simball_Left.APitch;
 	//Calculate pitch difference
-	if (PitchCurrent != mPitch){
-		mSceneMgr->getSceneNode("PenguinNode")->roll(Ogre::Degree(PitchCurrent - mPitch));
-		mPitch = PitchCurrent;
+	if (PitchCurrentL != mPitchL){
+		mSceneMgr->getSceneNode("PenguinNode")->roll(Ogre::Degree(PitchCurrentL - mPitchL));
+		mPitchL = PitchCurrentL;
 	}
 
-	 
+	//Roll
+	static int mRotL = 0;
+	int RotCurrentL = simball_Left.ARotation;
+	//Calculate rotation difference
+	if (RotCurrentL != mRotL){
+		mSceneMgr->getSceneNode("PenguinNode")->pitch(Ogre::Degree(RotCurrentL - mRotL));
+		mRotL = RotCurrentL;
+	}
+
+	//Insertion
+	static int mInsL = 0;
+	Ogre::Vector3 transVectorSbL = Ogre::Vector3::ZERO;
+	int InsCurrentL = simball_Left.AInsertion;
+	//Calculate rotation difference
+	if (InsCurrentL != mInsL){
+		transVectorSbL.x = (InsCurrentL - mInsL);
+		mSceneMgr->getSceneNode("MoveNode")->translate(transVectorSbL, Ogre::Node::TS_LOCAL);
+		mInsL = InsCurrentL;
+	}
+ 
+	//-------------------Right Stick-----------------------------------------------------------------
+	//Yaw
+	static int mYawR = 0;
+	int YawCurrentR = simball_Right.AYaw;
+	//Calculate yaw difference
+	if (YawCurrentR != mYawR){
+		mSceneMgr->getSceneNode("PenguinNode2")->yaw(Ogre::Degree(YawCurrentR - mYawR));
+		mYawR = YawCurrentR;
+	}
+
+	//Pitch
+	static int mPitchR = 0;
+	int PitchCurrentR = simball_Right.APitch;
+	//Calculate pitch difference
+	if (PitchCurrentR != mPitchR){
+		mSceneMgr->getSceneNode("PenguinNode2")->roll(Ogre::Degree(PitchCurrentR - mPitchR));
+		mPitchR = PitchCurrentR;
+	}
+
+	//Roll
+	static int mRotR = 0;
+	int RotCurrentR = simball_Right.ARotation;
+	//Calculate rotation difference
+	if (RotCurrentR != mRotR){
+		mSceneMgr->getSceneNode("PenguinNode2")->pitch(Ogre::Degree(RotCurrentR - mRotR));
+		mRotR = RotCurrentR;
+	}
+
+	//Insertion
+	static int mInsR = 0;
+	Ogre::Vector3 transVectorSbR = Ogre::Vector3::ZERO;
+	int InsCurrentR = simball_Right.AInsertion;
+	//Calculate rotation difference
+	if (InsCurrentR != mInsR){
+		transVectorSbR.x = (InsCurrentR - mInsR);
+		mSceneMgr->getSceneNode("MoveNode2")->translate(transVectorSbR, Ogre::Node::TS_LOCAL);
+		mInsR = InsCurrentR;
+	}
 	
 	
 	
