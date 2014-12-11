@@ -31,12 +31,15 @@ void LapTrainer::createScene(void)
 		//Create penguin
 		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("Penguin2", "instrument_stick.mesh");
 		entPenguin2 -> setCastShadows(true);
-		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("PenguinNode2", Ogre::Vector3( -10, 5, 0 ));
+		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("PenguinNode2", Ogre::Vector3( 0, 20, 0 ));
 		nodPenguin2->scale( .1, .1, .1); 
 		//nodPenguin->attachObject(entPenguin);
 		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNode2");
 		child2->attachObject(entPenguin2);
 		child2->translate(-150,0,0);
+
+
+
 }
 //-------------------------------------------------------------------------------------
 //Creation of frame listner
@@ -69,7 +72,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	bool ret = OGREBase::frameRenderingQueued(evt);
 
 
-	//Get Simballs values
+	//--------------------------------Get Simballs values-----------------------------------------------------
 	
 	//Load data symbols 
 	simball_Left.ReadSimBallState(simball.handle[1]);
@@ -154,6 +157,10 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		mInsR = InsCurrentR;
 	}
 	
+//-------------------Camera Stick-----------------------------------------------------------------
+
+
+
 	
 	
 	//Keyboard movements 

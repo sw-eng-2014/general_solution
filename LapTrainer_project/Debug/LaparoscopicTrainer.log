@@ -1,4 +1,4 @@
-﻿Build started 11/12/2014 15:09:47.
+﻿Build started 11/12/2014 16:11:26.
      1>Project "C:\Users\Delia\Documents\GitHub\general_solution\LapTrainer_project\LaparoscopicTrainer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\ogre\OgreSDK_vc11_v1-9-0\include" /I"C:\ogre\OgreSDK_vc11_v1-9-0\include\OIS" /I"C:\ogre\OgreSDK_vc11_v1-9-0\include\OGRE" /I"C:\ogre\OgreSDK_vc11_v1-9-0\Samples\Common\include" /I"C:\ogre\OgreSDK_vc11_v1-9-0\boost" /I"C:\ogre\OgreSDK_vc11_v1-9-0\include\OGRE\Overlay" /I"C:\hidapi-0.7.0\hidapi" /IC:\Users\Delia\Documents\GitHub\general_solution\Simballs_project /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt LapTrainer.cpp
@@ -6,26 +6,26 @@
      1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(5): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
      1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(25): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
      1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(35): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(66): warning C4305: 'initializing' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(82): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(85): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(91): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(94): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(100): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(103): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(110): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(113): warning C4244: '=' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(121): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(124): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(130): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(133): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(139): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(142): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(149): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(152): warning C4244: '=' : conversion from 'int' to 'Ogre::Real', possible loss of data
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(207): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(212): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
-     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(217): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(69): warning C4305: 'initializing' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(85): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(88): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(94): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(97): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(103): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(106): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(113): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(116): warning C4244: '=' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(124): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(127): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(133): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(136): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(142): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(145): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(152): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(155): warning C4244: '=' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(214): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(219): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(224): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\ogre\OgreSDK_vc11_v1-9-0\lib\Debug" /LIBPATH:"C:\ogre\OgreSDK_vc11_v1-9-0\boost\lib" /LIBPATH:"C:\hidapi-0.7.0" OgreMain_d.lib OIS_d.lib OgreOverlay_d.lib hidapi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.lib" /MACHINE:X86 Debug\Simball.obj
          Debug\OGRE.obj
@@ -39,4 +39,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:16.89
+Time Elapsed 00:00:17.65
