@@ -1,27 +1,29 @@
-﻿Build started 12/7/2014 2:01:10 PM.
-     1>Project "D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\LaparoscopicTrainer.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 11/12/2014 14:04:18.
+     1>Project "C:\Users\Delia\Documents\GitHub\general_solution\LapTrainer_project\LaparoscopicTrainer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\OgreSDK_vc11_v1-9-0\include" /I"C:\OgreSDK_vc11_v1-9-0\include\OIS" /I"C:\OgreSDK_vc11_v1-9-0\include\OGRE" /I"C:\OgreSDK_vc11_v1-9-0\Samples\Common\include" /I"C:\OgreSDK_vc11_v1-9-0\boost" /I"C:\OgreSDK_vc11_v1-9-0\include\OGRE\Overlay" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt OGRE.cpp LapTrainer.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\ogre\OgreSDK_vc11_v1-9-0\include" /I"C:\ogre\OgreSDK_vc11_v1-9-0\include\OIS" /I"C:\ogre\OgreSDK_vc11_v1-9-0\include\OGRE" /I"C:\ogre\OgreSDK_vc11_v1-9-0\Samples\Common\include" /I"C:\ogre\OgreSDK_vc11_v1-9-0\boost" /I"C:\ogre\OgreSDK_vc11_v1-9-0\include\OGRE\Overlay" /I"C:\hidapi-0.7.0\hidapi" /IC:\Users\Delia\Documents\GitHub\general_solution\Simballs_project /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt LapTrainer.cpp
          LapTrainer.cpp
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\laptrainer.cpp(5): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\laptrainer.cpp(18): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\laptrainer.cpp(49): warning C4305: 'initializing' : truncation from 'double' to 'Ogre::Real'
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\laptrainer.cpp(95): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\laptrainer.cpp(100): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\laptrainer.cpp(105): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
-         OGRE.cpp
-     1>d:\tolek\dydaktyka\2014_10_jesien\software engineering\vi meeting\laptrainer_04_12_2014\ogre.cpp(155): warning C4305: 'argument' : truncation from 'double' to 'float'
-         Generating Code...
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(5): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(25): warning C4305: 'argument' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(56): warning C4305: 'initializing' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(67): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(70): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(76): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(79): warning C4244: 'argument' : conversion from 'int' to 'Ogre::Real', possible loss of data
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(135): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(140): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
+     1>c:\users\delia\documents\github\general_solution\laptrainer_project\laptrainer.cpp(145): warning C4305: '=' : truncation from 'double' to 'Ogre::Real'
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\Debug\LapTrainer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\OgreSDK_vc11_v1-9-0\lib\Debug" /LIBPATH:"C:\OgreSDK_vc11_v1-9-0\boost\lib" OgreMain_d.lib OIS_d.lib OgreOverlay_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\Debug\LapTrainer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\Debug\LapTrainer.lib" /MACHINE:X86 Debug\OGRE.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\ogre\OgreSDK_vc11_v1-9-0\lib\Debug" /LIBPATH:"C:\ogre\OgreSDK_vc11_v1-9-0\boost\lib" /LIBPATH:"C:\hidapi-0.7.0" OgreMain_d.lib OIS_d.lib OgreOverlay_d.lib hidapi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.lib" /MACHINE:X86 Debug\Simball.obj
+         Debug\OGRE.obj
          Debug\LapTrainer.obj
-         LaparoscopicTrainer.vcxproj -> D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\Debug\LapTrainer.exe
+         LaparoscopicTrainer.vcxproj -> C:\Users\Delia\Documents\GitHub\general_solution\Debug\LapTrainer.exe
        PostBuildEvent:
-         copy "D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\Debug\\LapTrainer.exe" "C:\OgreSDK_vc11_v1-9-0\Bin\Debug"
+         copy "C:\Users\Delia\Documents\GitHub\general_solution\Debug\\LapTrainer.exe" "C:\ogre\OgreSDK_vc11_v1-9-0\Bin\Debug"
          :VCEnd
-         Liczba skopiowanych plików:         1.
-     1>Done Building Project "D:\tolek\dydaktyka\2014_10_jesien\Software Engineering\VI meeting\LapTrainer_04_12_2014\LaparoscopicTrainer.vcxproj" (Rebuild target(s)).
+                 1 archivo(s) copiado(s).
+     1>Done Building Project "C:\Users\Delia\Documents\GitHub\general_solution\LapTrainer_project\LaparoscopicTrainer.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:43.71
+Time Elapsed 00:00:16.43

@@ -2,11 +2,18 @@
 //-------------------------------------------------------------------------------------
 LapTrainer::LapTrainer(void)
 { 
-	srand (time(NULL));   // JN
+	srand (time(NULL));   // 
+	//lab constructor
+	num_res=simball.DevIdentificTech(7330,1);
+	num_res=simball.ConnectToSimBall(0);
 }
 //-------------------------------------------------------------------------------------
 LapTrainer::~LapTrainer(void)
 {
+	num_res= simball.DisconnectFromSimBall(0);
+	hid_free_enumeration(simball.device); //we free enumeration
+	Sleep (50);
+	hid_exit();
 }
 //--------------------------------------------------------------------------------------
 void LapTrainer::createScene(void)
@@ -51,6 +58,33 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	bool currMouse = mMouse->getMouseState().buttonDown(OIS::MB_Left);
 	bool ret = OGREBase::frameRenderingQueued(evt);
 
+
+	//Get Simballs values
+	//Yaw
+	static int mYaw = 0;
+	//Load data symbols 
+	simball_Left.ReadSimBallState(simball.handle[1]);
+	int YawCurrent = simball_Left.AYaw;
+	//Calculate yaw difference
+	if (YawCurrent != mYaw){
+		mSceneMgr->getSceneNode("PenguinNode")->yaw(Ogre::Degree(YawCurrent - mYaw));
+		mYaw = YawCurrent;
+	}
+
+	//Pitch
+	static int mPitch = 0;
+	int PitchCurrent = simball_Left.APitch;
+	//Calculate pitch difference
+	if (PitchCurrent != mPitch){
+		mSceneMgr->getSceneNode("PenguinNode")->roll(Ogre::Degree(PitchCurrent - mPitch));
+		mPitch = PitchCurrent;
+	}
+
+	 
+	
+	
+	
+	//Keyboard movements 
 	Ogre::Vector3 transVector = Ogre::Vector3::ZERO;
 	Ogre::Vector3 transVector2 = Ogre::Vector3::ZERO;
 		if (mKeyboard->isKeyDown(OIS::KC_W)) // Forward
@@ -59,7 +93,13 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_S)) // Backward
 		{
+			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				// Yaw left
+				mSceneMgr->getSceneNode("PenguinNode")->pitch(Ogre::Degree(mRotate * 5));
+			} else {
 			transVector.z += mMove;
+			}
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_A)) // Left - yaw or strafe
 		{
@@ -113,6 +153,8 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 			transVector2.x += mMove;
 		}
 		// Translate the results to the scenenode
+
+		//Move node on x-axis for the insertion 
 		mSceneMgr->getSceneNode("MoveNode")->translate(transVector2 * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
 		mSceneMgr->getSceneNode("PenguinNode")->translate(transVector * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
 

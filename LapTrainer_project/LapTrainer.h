@@ -1,4 +1,5 @@
 #include "OGRE.h"
+#include "Simball.h"
 #include <cassert>
 #include <cmath>
 
@@ -7,7 +8,8 @@ class LapTrainer : public OGREBase
 public:
     LapTrainer(void);
     virtual ~LapTrainer(void);
-
+	SimBall simball, simball_Left, simball_Right,simball_camera;
+	int num_res;
 private:	
 
 protected:
