@@ -11,7 +11,7 @@ public:
 	SimBall simball, simball_Left, simball_Right,simball_camera;
 	int num_res;
 private:	
-
+	bool mNoSimballConnected;
 protected:
 	virtual void createScene(void);
 	virtual bool keyPressed(const OIS::KeyEvent &arg);

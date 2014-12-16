@@ -2,10 +2,14 @@
 //-------------------------------------------------------------------------------------
 LapTrainer::LapTrainer(void)
 { 
-	srand (time(NULL));   // 
+	srand (time(NULL));   
 	//lab constructor
 	num_res=simball.DevIdentificTech(7330,1);
 	num_res=simball.ConnectToSimBall(0);
+	if (num_res > 0)
+		mNoSimballConnected = false;
+	else 
+		mNoSimballConnected = true;
 }
 //-------------------------------------------------------------------------------------
 LapTrainer::~LapTrainer(void)
@@ -18,25 +22,22 @@ LapTrainer::~LapTrainer(void)
 //--------------------------------------------------------------------------------------
 void LapTrainer::createScene(void)
 {
-		//Create penguin
-		Ogre::Entity* entPenguin = mSceneMgr->createEntity("Penguin", "instrument_stick.mesh");
-		entPenguin -> setCastShadows(true);
-		Ogre::SceneNode* nodPenguin = mSceneMgr->getRootSceneNode()->createChildSceneNode("PenguinNode", Ogre::Vector3( 0, 20, 0 ));
-		nodPenguin->scale( .1, .1, .1); 
-		//nodPenguin->attachObject(entPenguin);
-		Ogre::SceneNode* child = nodPenguin->createChildSceneNode("MoveNode");
-		child->attachObject(entPenguin);
-		child->translate(-150,0,0);
+		//Create right stick
+		Ogre::Entity* StickRight = mSceneMgr->createEntity("StickRight", "instrument_stick.mesh");
+		StickRight -> setCastShadows(true);
+		Ogre::SceneNode* RightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("RightNode", Ogre::Vector3( 0, 20, 0 ));
+		RightNode->scale( 1, 1, 1); 
+		Ogre::SceneNode* child = RightNode->createChildSceneNode("MoveNodeRight");
+		child->attachObject(StickRight);
+		child->translate(150,30,0);
 
-		//Create penguin
-		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("Penguin2", "instrument_stick.mesh");
+		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("StickLeft", "instrument_stick.mesh");
 		entPenguin2 -> setCastShadows(true);
-		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("PenguinNode2", Ogre::Vector3( 0, 20, 0 ));
-		nodPenguin2->scale( .1, .1, .1); 
-		//nodPenguin->attachObject(entPenguin);
-		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNode2");
+		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("LeftNode", Ogre::Vector3( 0, 20, 0 ));
+		nodPenguin2->scale( 1, 1, 1); 
+		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNodeLeft");
 		child2->attachObject(entPenguin2);
-		child2->translate(-150,0,0);
+		child2->translate(150,30,0);
 
 
 
@@ -71,172 +72,266 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	bool currMouse = mMouse->getMouseState().buttonDown(OIS::MB_Left);
 	bool ret = OGREBase::frameRenderingQueued(evt);
 
+	if (!mNoSimballConnected) //Check if connected otherwise ignore
+	{
+		//--------------------------------Get Simballs values--------------------------------------------
+		//Load data symbols 
+		simball_Left.ReadSimBallState(simball.handle[1]);
+		simball_Right.ReadSimBallState(simball.handle[2]);
+		//simball_camera.ReadSimBallState(simball.handle[3]);
 
-	//--------------------------------Get Simballs values-----------------------------------------------------
-	
-	//Load data symbols 
-	simball_Left.ReadSimBallState(simball.handle[1]);
-	simball_Right.ReadSimBallState(simball.handle[2]);
-	//simball_camera.ReadSimBallState(simball.handle[3]);
+		//-------------------Left Stick-----------------------------------------------------------------
+		//Yaw
+		static int mYawL = 0;
+		int YawCurrentL = simball_Left.AYaw;
+		//Calculate yaw difference
+		if (YawCurrentL != mYawL){
+			mSceneMgr->getSceneNode("RightNode")->yaw(Ogre::Degree(YawCurrentL - mYawL));
+			mYawL = YawCurrentL;
+		}
 
-	//-------------------Left Stick-----------------------------------------------------------------
-	//Yaw
-	static int mYawL = 0;
-	int YawCurrentL = simball_Left.AYaw;
-	//Calculate yaw difference
-	if (YawCurrentL != mYawL){
-		mSceneMgr->getSceneNode("PenguinNode")->yaw(Ogre::Degree(YawCurrentL - mYawL));
-		mYawL = YawCurrentL;
-	}
+		//Pitch
+		static int mPitchL = 0;
+		int PitchCurrentL = simball_Left.APitch;
+		//Calculate pitch difference
+		if (PitchCurrentL != mPitchL){
+			mSceneMgr->getSceneNode("RightNode")->roll(Ogre::Degree(PitchCurrentL - mPitchL));
+			mPitchL = PitchCurrentL;
+		}
 
-	//Pitch
-	static int mPitchL = 0;
-	int PitchCurrentL = simball_Left.APitch;
-	//Calculate pitch difference
-	if (PitchCurrentL != mPitchL){
-		mSceneMgr->getSceneNode("PenguinNode")->roll(Ogre::Degree(PitchCurrentL - mPitchL));
-		mPitchL = PitchCurrentL;
-	}
+		//Roll
+		static int mRotL = 0;
+		int RotCurrentL = simball_Left.ARotation;
+		//Calculate rotation difference
+		if (RotCurrentL != mRotL){
+			mSceneMgr->getSceneNode("RightNode")->pitch(Ogre::Degree(RotCurrentL - mRotL));
+			mRotL = RotCurrentL;
+		}
 
-	//Roll
-	static int mRotL = 0;
-	int RotCurrentL = simball_Left.ARotation;
-	//Calculate rotation difference
-	if (RotCurrentL != mRotL){
-		mSceneMgr->getSceneNode("PenguinNode")->pitch(Ogre::Degree(RotCurrentL - mRotL));
-		mRotL = RotCurrentL;
-	}
-
-	//Insertion
-	static int mInsL = 0;
-	Ogre::Vector3 transVectorSbL = Ogre::Vector3::ZERO;
-	int InsCurrentL = simball_Left.AInsertion;
-	//Calculate rotation difference
-	if (InsCurrentL != mInsL){
-		transVectorSbL.x = (InsCurrentL - mInsL);
-		mSceneMgr->getSceneNode("MoveNode")->translate(transVectorSbL, Ogre::Node::TS_LOCAL);
-		mInsL = InsCurrentL;
-	}
+		//Insertion
+		static int mInsL = 0;
+		Ogre::Vector3 transVectorSbL = Ogre::Vector3::ZERO;
+		int InsCurrentL = simball_Left.AInsertion;
+		//Calculate rotation difference
+		if (InsCurrentL != mInsL){
+			transVectorSbL.x = (InsCurrentL - mInsL);
+			mSceneMgr->getSceneNode("MoveNodeRight")->translate(transVectorSbL, Ogre::Node::TS_LOCAL);
+			mInsL = InsCurrentL;
+		}
  
-	//-------------------Right Stick-----------------------------------------------------------------
-	//Yaw
-	static int mYawR = 0;
-	int YawCurrentR = simball_Right.AYaw;
-	//Calculate yaw difference
-	if (YawCurrentR != mYawR){
-		mSceneMgr->getSceneNode("PenguinNode2")->yaw(Ogre::Degree(YawCurrentR - mYawR));
-		mYawR = YawCurrentR;
-	}
+		//-------------------Right Stick-----------------------------------------------------------------
+		//Yaw
+		static int mYawR = 0;
+		int YawCurrentR = simball_Right.AYaw;
+		//Calculate yaw difference
+		if (YawCurrentR != mYawR){
+			mSceneMgr->getSceneNode("LeftNode")->yaw(Ogre::Degree(YawCurrentR - mYawR));
+			mYawR = YawCurrentR;
+		}
 
-	//Pitch
-	static int mPitchR = 0;
-	int PitchCurrentR = simball_Right.APitch;
-	//Calculate pitch difference
-	if (PitchCurrentR != mPitchR){
-		mSceneMgr->getSceneNode("PenguinNode2")->roll(Ogre::Degree(PitchCurrentR - mPitchR));
-		mPitchR = PitchCurrentR;
-	}
+		//Pitch
+		static int mPitchR = 0;
+		int PitchCurrentR = simball_Right.APitch;
+		//Calculate pitch difference
+		if (PitchCurrentR != mPitchR){
+			mSceneMgr->getSceneNode("LeftNode")->roll(Ogre::Degree(PitchCurrentR - mPitchR));
+			mPitchR = PitchCurrentR;
+		}
 
-	//Roll
-	static int mRotR = 0;
-	int RotCurrentR = simball_Right.ARotation;
-	//Calculate rotation difference
-	if (RotCurrentR != mRotR){
-		mSceneMgr->getSceneNode("PenguinNode2")->pitch(Ogre::Degree(RotCurrentR - mRotR));
-		mRotR = RotCurrentR;
-	}
+		//Roll
+		static int mRotR = 0;
+		int RotCurrentR = simball_Right.ARotation;
+		//Calculate rotation difference
+		if (RotCurrentR != mRotR){
+			mSceneMgr->getSceneNode("LeftNode")->pitch(Ogre::Degree(RotCurrentR - mRotR));
+			mRotR = RotCurrentR;
+		}
 
-	//Insertion
-	static int mInsR = 0;
-	Ogre::Vector3 transVectorSbR = Ogre::Vector3::ZERO;
-	int InsCurrentR = simball_Right.AInsertion;
-	//Calculate rotation difference
-	if (InsCurrentR != mInsR){
-		transVectorSbR.x = (InsCurrentR - mInsR);
-		mSceneMgr->getSceneNode("MoveNode2")->translate(transVectorSbR, Ogre::Node::TS_LOCAL);
-		mInsR = InsCurrentR;
-	}
+		//Insertion
+		static int mInsR = 0;
+		Ogre::Vector3 transVectorSbR = Ogre::Vector3::ZERO;
+		int InsCurrentR = simball_Right.AInsertion;
+		//Calculate rotation difference
+		if (InsCurrentR != mInsR){
+			transVectorSbR.x = (InsCurrentR - mInsR);
+			mSceneMgr->getSceneNode("MoveNodeLeft")->translate(transVectorSbR, Ogre::Node::TS_LOCAL);
+			mInsR = InsCurrentR;
+		}
 	
-//-------------------Camera Stick-----------------------------------------------------------------
+	//-------------------Camera Stick-----------------------------------------------------------------
 
-
-
-	
-	
-	//Keyboard movements 
-	Ogre::Vector3 transVector = Ogre::Vector3::ZERO;
-	Ogre::Vector3 transVector2 = Ogre::Vector3::ZERO;
+	}
+	//-------------------Keyboard movements left node-----------------------------------------------------------------
+	//More information of the shorcuts of OIS: https://code.google.com/p/ezonas/source/browse/Ogrish/OIS-keycodes.txt?spec=svn92d08c346e48025efafc980557ee738ab0bd6ecd&r=92d08c346e48025efafc980557ee738ab0bd6ecd
+	Ogre::Vector3 transVectorLeft = Ogre::Vector3::ZERO;
+	Ogre::Vector3 transVectorInsertionLeft = Ogre::Vector3::ZERO;
 		if (mKeyboard->isKeyDown(OIS::KC_W)) // Forward
 		{
-			transVector.z -= mMove;
+			transVectorLeft.z -= mMove;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_S)) // Backward
 		{
 			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
 			{
-				// Yaw left
-				mSceneMgr->getSceneNode("PenguinNode")->pitch(Ogre::Degree(mRotate * 5));
-			} else {
-			transVector.z += mMove;
+				// Pitch left
+				mSceneMgr->getSceneNode("LeftNode")->pitch(Ogre::Degree(mRotate * 5));
+			} 
+			else if(mKeyboard->isKeyDown( OIS::KC_LMENU)) //Left alt
+			{
+				// Pitch right
+				mSceneMgr->getSceneNode("LeftNode")->pitch(Ogre::Degree(mRotate * -5));
+			}
+			else {
+			transVectorLeft.z += mMove;
 			}
 		}
-		if (mKeyboard->isKeyDown(OIS::KC_A)) // Left - yaw or strafe
+		if (mKeyboard->isKeyDown(OIS::KC_A)) // Left - or roll
 		{
 			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
 			{
-				// Yaw left
-				mSceneMgr->getSceneNode("PenguinNode")->roll(Ogre::Degree(mRotate * 5));
-			} else {
-				transVector.x -= mMove; // Strafe left
+				// Roll left
+				mSceneMgr->getSceneNode("LeftNode")->roll(Ogre::Degree(mRotate * 5));
+			} 
+			else if(mKeyboard->isKeyDown( OIS::KC_LMENU)) //Left alt
+			{
+				// Roll right
+				mSceneMgr->getSceneNode("LeftNode")->roll(Ogre::Degree(mRotate * -5));
+			}
+			else {
+				transVectorLeft.x -= mMove; // Strafe left
 			}
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_D)) // Right - yaw or strafe
 		{
 			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
 			{
+				// Yaw left
+				mSceneMgr->getSceneNode("LeftNode")->yaw(Ogre::Degree(mRotate * 5));
+			} 
+			else if(mKeyboard->isKeyDown( OIS::KC_LMENU)) //Left alt
+			{
 				// Yaw right
-				mSceneMgr->getSceneNode("PenguinNode")->yaw(Ogre::Degree(-mRotate * 5));
-			} else {
-				transVector.x += mMove; // Strafe right
+				mSceneMgr->getSceneNode("LeftNode")->yaw(Ogre::Degree(mRotate * -5));
+			}
+			else {
+				transVectorLeft.x += mMove; // Strafe right
 			}
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_Z)) // Up
 		{
-			transVector.y += mMove;
+			transVectorLeft.y += mMove;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_X)) // Down
 		{
-			transVector.y -= mMove;
+			transVectorLeft.y -= mMove;
 		}
+		if (mKeyboard->isKeyDown(OIS::KC_Q)) // Change x point
+		{
+			transVectorInsertionLeft.x -= mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_E)) // change x point
+		{
+			transVectorInsertionLeft.x += mMove;
+		}
+		// Translate the results to the scenenode
+		//Move node on x-axis for the insertion 
+		mSceneMgr->getSceneNode("MoveNodeLeft")->translate(transVectorInsertionLeft * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+		mSceneMgr->getSceneNode("LeftNode")->translate(transVectorLeft * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+
+	//-------------------Keyboard movements right node-----------------------------------------------------------------
+	//Keyboard movements 
+	Ogre::Vector3 transVectorRight = Ogre::Vector3::ZERO;
+	Ogre::Vector3 transVectorInsertionRight = Ogre::Vector3::ZERO;
+		if (mKeyboard->isKeyDown(OIS::KC_UP)) // Forward
+		{
+			transVectorRight.z -= mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_DOWN)) // Backward
+		{
+			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				// Pitch left
+				mSceneMgr->getSceneNode("RightNode")->pitch(Ogre::Degree(mRotate * 5));
+			} 
+			else if(mKeyboard->isKeyDown( OIS::KC_LMENU)) //Left alt
+			{
+				// Pitch right
+				mSceneMgr->getSceneNode("RightNode")->pitch(Ogre::Degree(mRotate * -5));
+			}
+			else {
+			transVectorRight.z += mMove;
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_LEFT)) // Left - or roll
+		{
+			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				// Roll left
+				mSceneMgr->getSceneNode("RightNode")->roll(Ogre::Degree(mRotate * 5));
+			} 
+			else if(mKeyboard->isKeyDown( OIS::KC_LMENU)) //Left alt
+			{
+				// Roll right
+				mSceneMgr->getSceneNode("RightNode")->roll(Ogre::Degree(mRotate * -5));
+			}
+			else {
+				transVectorRight.x -= mMove; // Strafe left
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_RIGHT)) // Right - yaw or strafe
+		{
+			if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				// Yaw left
+				mSceneMgr->getSceneNode("RightNode")->yaw(Ogre::Degree(mRotate * 5));
+			} 
+			else if(mKeyboard->isKeyDown( OIS::KC_LMENU)) //Left alt
+			{
+				// Yaw right
+				mSceneMgr->getSceneNode("RightNode")->yaw(Ogre::Degree(mRotate * -5));
+			}
+			else {
+				transVectorRight.x += mMove; // Strafe right
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_N)) // Up
+		{
+			transVectorRight.y += mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_M)) // Down
+		{
+			transVectorRight.y -= mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_K)) // Change x point
+		{
+			transVectorInsertionRight.x -= mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_L)) // change x point
+		{
+			transVectorInsertionRight.x += mMove;
+		}
+		// Translate the results to the scenenode
+		//Move node on x-axis for the insertion 
+		mSceneMgr->getSceneNode("MoveNodeRight")->translate(transVectorInsertionRight * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+		mSceneMgr->getSceneNode("RightNode")->translate(transVectorRight * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+
+		//-------------------Change sensibility -----------------------------------------------------------------
+		//Change sensibility of the keyboard
 		if (mKeyboard->isKeyDown(OIS::KC_1)) // Change speed
 		{
-			mMove = 125;
+			mMove = 50;
 			mRotate = 0.07;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_2)) // Change speed
 		{
-			mMove = 250;
-			mRotate = 0.13;
+			mMove = 100;
+			mRotate = 0.10;
 		}
-		if (mKeyboard->isKeyDown(OIS::KC_2)) // Change speed
+		if (mKeyboard->isKeyDown(OIS::KC_3)) // Change speed
 		{
 			mMove = 250;
 			mRotate = 0.13;
 		}
-		if (mKeyboard->isKeyDown(OIS::KC_L)) // Forward
-		{
-			transVector2.x -= mMove;
-		}
-		if (mKeyboard->isKeyDown(OIS::KC_K)) // Backward
-		{
-			transVector2.x += mMove;
-		}
-		// Translate the results to the scenenode
-
-		//Move node on x-axis for the insertion 
-		mSceneMgr->getSceneNode("MoveNode")->translate(transVector2 * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
-		mSceneMgr->getSceneNode("PenguinNode")->translate(transVector * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
-
 	return ret;
 }
 
