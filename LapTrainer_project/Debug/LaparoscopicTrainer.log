@@ -1,4 +1,4 @@
-﻿Build started 16-12-2014 16:18:50.
+﻿Build started 17-12-2014 2:25:19.
      1>Project "C:\Users\Dennis\Documents\GitHub\general_solution\LapTrainer_project\LaparoscopicTrainer.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\OgreSDK_vc11_v1-9-0\include" /I"C:\OgreSDK_vc11_v1-9-0\include\OIS" /I"C:\OgreSDK_vc11_v1-9-0\include\OGRE" /I"C:\OgreSDK_vc11_v1-9-0\Samples\Common\include" /I"C:\OgreSDK_vc11_v1-9-0\boost" /I"C:\OgreSDK_vc11_v1-9-0\include\OGRE\Overlay" /I"C:\hidapi-0.7.0\hidapi" /IC:\Users\Dennis\Documents\GitHub\general_solution\Simballs_project /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt LapTrainer.cpp
@@ -37,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:25.23
+Time Elapsed 00:00:23.40

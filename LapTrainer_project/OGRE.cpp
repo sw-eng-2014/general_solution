@@ -157,16 +157,15 @@ void OGREBase::createSceneBase(void)
   
 		//Create floor 
 		Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
- 
 		Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
- 
+        plane, 1500, 1500, 100, 100, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
 		Ogre::Entity* entGround = mSceneMgr->createEntity("GroundEntity", "ground");
 		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
- 
 		entGround->setMaterialName("Examples/Rockwall");
 		entGround->setCastShadows(false);
+		
 
+		
 		// Create a light
 		Ogre::Light* light = mSceneMgr->createLight("BaseLight");
 		light ->setType(Ogre::Light::LT_POINT);
@@ -185,6 +184,7 @@ void OGREBase::createScene(void)
 void OGREBase::createCamera(void)
 {
 	/**
+		//Old camera
 		// Create the camera
 		mCamera = mSceneMgr->createCamera("PlayerCam");
  
@@ -205,7 +205,7 @@ void OGREBase::createCamera(void)
 		mCamera->setNearClipDistance(5);
 		// Create the camera's top node (which will only handle position).
 		cameraNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("cameraNode");
-		cameraNode->setPosition(0, 500, 500);
+		cameraNode->setPosition(0, 1000, 1000);
 
 		cameraNode->pitch(Ogre::Degree(-45));
 		// Create the camera's yaw node as a child of camera's top node.

@@ -25,19 +25,19 @@ void LapTrainer::createScene(void)
 		//Create right stick
 		Ogre::Entity* StickRight = mSceneMgr->createEntity("StickRight", "instrument_stick.mesh");
 		StickRight -> setCastShadows(true);
-		Ogre::SceneNode* RightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("RightNode", Ogre::Vector3( 0, 20, 0 ));
+		Ogre::SceneNode* RightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("RightNode", Ogre::Vector3(300, 100, 100));
 		RightNode->scale( 1, 1, 1); 
 		Ogre::SceneNode* child = RightNode->createChildSceneNode("MoveNodeRight");
 		child->attachObject(StickRight);
-		child->translate(150,30,0);
+		child->translate(150,0,0);
 
 		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("StickLeft", "instrument_stick.mesh");
 		entPenguin2 -> setCastShadows(true);
-		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("LeftNode", Ogre::Vector3( 0, 20, 0 ));
+		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("LeftNode", Ogre::Vector3(-300, 100, 100));
 		nodPenguin2->scale( 1, 1, 1); 
 		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNodeLeft");
 		child2->attachObject(entPenguin2);
-		child2->translate(150,30,0);
+		child2->translate(150,0,0);
 
 
 
