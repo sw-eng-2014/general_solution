@@ -332,6 +332,57 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 			mMove = 250;
 			mRotate = 0.13;
 		}
+
+		
+		//-------------------Move camera -----------------------------------------------------------------
+		Ogre::Vector3 transVectorInsertion = Ogre::Vector3::ZERO;
+		if (mKeyboard->isKeyDown(OIS::KC_Y)) // Pull back
+		{
+			transVectorInsertion.z -= mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_U)) // Insert
+		{
+			transVectorInsertion.z += mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_I)) // Roll
+		{
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+				mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree(mRotate * -5));
+			}
+			else
+			{
+				mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree(mRotate * 5));
+			}
+
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_O)) // Pitch
+		{
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+				mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree(mRotate * -5));
+			}
+			else
+			{
+				mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree(mRotate * 5));
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_P)) // Yaw
+		{
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * -5));
+			}
+			else
+			{
+				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * 5));
+			}
+		}
+		mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsertion * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+
+
+
+
 	return ret;
 }
 

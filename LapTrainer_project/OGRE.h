@@ -60,6 +60,8 @@ protected:
 	Ogre::String mResourcesCfg;
 	Ogre::RenderWindow* mWindow;
 	Ogre::SceneManager* mSceneMgr;
+	Ogre::SceneNode *cameraNode;
+	Ogre::SceneNode *cameraInsertion;
 	Ogre::Camera* mCamera;
 	bool mCloseApplication; 
 

@@ -184,6 +184,7 @@ void OGREBase::createScene(void)
 //Create the camera
 void OGREBase::createCamera(void)
 {
+	/**
 		// Create the camera
 		mCamera = mSceneMgr->createCamera("PlayerCam");
  
@@ -191,7 +192,25 @@ void OGREBase::createCamera(void)
 		mCamera->setPosition(Ogre::Vector3(0,500,500));
 		// Look back along -Z
 		mCamera->lookAt(Ogre::Vector3(0,0,0));
+		mCamera->setNearClipDistance(5);*/
+
+		
+		// Create the camera
+		mCamera = mSceneMgr->createCamera("PlayerCam");
+ 
+		// Position it at 80 in Z direction
+		mCamera->setPosition(Ogre::Vector3(0,0,0));
+		// Look back along -Z
+		//mCamera->lookAt(Ogre::Vector3(0,0,0));
 		mCamera->setNearClipDistance(5);
+		// Create the camera's top node (which will only handle position).
+		cameraNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("cameraNode");
+		cameraNode->setPosition(0, 500, 500);
+
+		cameraNode->pitch(Ogre::Degree(-45));
+		// Create the camera's yaw node as a child of camera's top node.
+		cameraInsertion = cameraNode->createChildSceneNode("cameraInsertion");
+		cameraInsertion->attachObject(mCamera);
 }
 
 //-------------------------------------------------------------------------------------
@@ -255,6 +274,8 @@ bool OGREBase::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		//Need to capture/update each device
 		mKeyboard->capture();
 		mMouse->capture();
+
+
 		return true;
 	}
 
@@ -266,6 +287,7 @@ bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
     {
         mCloseApplication =true;
     }
+
 	return true;}
 
 //-------------------------------------------------------------------------------------
