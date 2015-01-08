@@ -78,7 +78,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		//Load data symbols 
 		simball_Left.ReadSimBallState(simball.handle[1]);
 		simball_Right.ReadSimBallState(simball.handle[2]);
-		//simball_camera.ReadSimBallState(simball.handle[3]);
+		simball_camera.ReadSimBallState(simball.handle[3]);
 
 		//-------------------Left Stick-----------------------------------------------------------------
 		//Yaw
@@ -140,7 +140,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 		//Roll
 		static int mRotR = 0;
-		int RotCurrentR = simball_Right.ARotation;
+		int RotCurrentR = (simball_Right.ARotation-228)*-2;
 		//Calculate rotation difference
 		if (RotCurrentR != mRotR){
 			mSceneMgr->getSceneNode("LeftNode")->pitch(Ogre::Degree(RotCurrentR - mRotR));
@@ -159,6 +159,103 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 	
 	//-------------------Camera Stick-----------------------------------------------------------------
+		////////////////////////////////
+		
+
+		//Yaw
+		static int mYawC = 0;
+		int YawCurrentC = simball_camera.AYaw;
+		if (YawCurrentC != mYawC){
+			mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree((YawCurrentC - mYawC)));
+			mYawC = YawCurrentC;
+		}
+
+		
+		//Pitch
+		static int mPitchC = 0;
+		int PitchCurrentC = simball_camera.APitch;
+		if (PitchCurrentC != mPitchC){
+			mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree((PitchCurrentC - mPitchC)));
+			mPitchC = PitchCurrentC;
+		}
+
+		//Roll //It works but it moves like mirror sometimes. It doesn't work well
+		static int mRotC = 0;
+		int RotCurrentC = (simball_camera.ARotation*-1)+180;
+		if (RotCurrentC != mRotC){
+			mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree((RotCurrentC - mRotC))*-1.00);	//Changed to -1.0 instead of -0.09
+			mRotC = RotCurrentC;
+		}
+		 
+
+		//Insertion //It's not working, we don't know why
+		static int mInsC = 0;
+		Ogre::Vector3 transVectorInsC = Ogre::Vector3::ZERO;
+		int InsCurrentC = (simball_camera.AInsertion-228)*-2;
+		if (InsCurrentC != mInsC){
+			transVectorInsC.z = (InsCurrentC - mInsC);
+			mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsC, Ogre::Node::TS_LOCAL);
+			mInsC = InsCurrentC;
+		}
+
+
+		/*
+		if (mKeyboard->isKeyDown(OIS::KC_Y)) // Pull back
+		{
+			transVectorInsertion.z -= mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_U)) // Insert
+		{
+			transVectorInsertion.z += mMove;
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_I)) // Roll
+		{
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+				mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree(mRotate * -5));
+			}
+			else
+			{
+				mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree(mRotate * 5));
+			}
+
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_O)) // Pitch
+		{
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+				mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree(mRotate * -5));
+			}
+			else
+			{
+				mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree(mRotate * 5));
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_P)) // Yaw
+		{
+			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+			{
+				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * -5));
+			}
+			else
+			{
+				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * 5));
+			}
+		}
+		mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsertion * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+
+		/////////////////////////////////////////////
+
+
+
+		*/
+
+
+
+
+
+
+
 
 	}
 	//-------------------Keyboard movements left node-----------------------------------------------------------------
@@ -338,11 +435,11 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		Ogre::Vector3 transVectorInsertion = Ogre::Vector3::ZERO;
 		if (mKeyboard->isKeyDown(OIS::KC_Y)) // Pull back
 		{
-			transVectorInsertion.z -= mMove;
+			//transVectorInsertion.z -= mMove;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_U)) // Insert
 		{
-			transVectorInsertion.z += mMove;
+			//transVectorInsertion.z += mMove;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_I)) // Roll
 		{
