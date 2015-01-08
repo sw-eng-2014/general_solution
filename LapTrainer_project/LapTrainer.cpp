@@ -29,7 +29,7 @@ void LapTrainer::createScene(void)
 		RightNode->scale( 1, 1, 1); 
 		Ogre::SceneNode* child = RightNode->createChildSceneNode("MoveNodeRight");
 		child->attachObject(StickRight);
-		child->translate(150,0,0);
+		child->translate(0,0,0);
 
 		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("StickLeft", "instrument_stick.mesh");
 		entPenguin2 -> setCastShadows(true);
@@ -37,7 +37,7 @@ void LapTrainer::createScene(void)
 		nodPenguin2->scale( 1, 1, 1); 
 		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNodeLeft");
 		child2->attachObject(entPenguin2);
-		child2->translate(150,0,0);
+		child2->translate(0,0,0);
 
 
 
@@ -111,7 +111,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		//Insertion
 		static int mInsL = 0;
 		Ogre::Vector3 transVectorSbL = Ogre::Vector3::ZERO;
-		int InsCurrentL = simball_Left.AInsertion;
+		int InsCurrentL = (simball_Left.AInsertion-228)*1;
 		//Calculate rotation difference
 		if (InsCurrentL != mInsL){
 			transVectorSbL.x = (InsCurrentL - mInsL);
@@ -150,7 +150,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		//Insertion
 		static int mInsR = 0;
 		Ogre::Vector3 transVectorSbR = Ogre::Vector3::ZERO;
-		int InsCurrentR = simball_Right.AInsertion;
+		int InsCurrentR = (simball_Right.AInsertion-228)*1;
 		//Calculate rotation difference
 		if (InsCurrentR != mInsR){
 			transVectorSbR.x = (InsCurrentR - mInsR);
@@ -181,13 +181,12 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 		//Roll //It works but it moves like mirror sometimes. It doesn't work well
 		static int mRotC = 0;
-		int RotCurrentC = (simball_camera.ARotation*-1)+180;
+		int RotCurrentC = (simball_camera.ARotation*-1)+179;
 		if (RotCurrentC != mRotC){
 			mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree((RotCurrentC - mRotC))*-1.00);	//Changed to -1.0 instead of -0.09
 			mRotC = RotCurrentC;
 		}
 		 
-
 		//Insertion //It's not working, we don't know why
 		static int mInsC = 0;
 		Ogre::Vector3 transVectorInsC = Ogre::Vector3::ZERO;
@@ -198,57 +197,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 			mInsC = InsCurrentC;
 		}
 
-
-		/*
-		if (mKeyboard->isKeyDown(OIS::KC_Y)) // Pull back
-		{
-			transVectorInsertion.z -= mMove;
-		}
-		if (mKeyboard->isKeyDown(OIS::KC_U)) // Insert
-		{
-			transVectorInsertion.z += mMove;
-		}
-		if (mKeyboard->isKeyDown(OIS::KC_I)) // Roll
-		{
-			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-			{
-				mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree(mRotate * -5));
-			}
-			else
-			{
-				mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree(mRotate * 5));
-			}
-
-		}
-		if (mKeyboard->isKeyDown(OIS::KC_O)) // Pitch
-		{
-			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-			{
-				mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree(mRotate * -5));
-			}
-			else
-			{
-				mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree(mRotate * 5));
-			}
-		}
-		if (mKeyboard->isKeyDown(OIS::KC_P)) // Yaw
-		{
-			if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
-			{
-				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * -5));
-			}
-			else
-			{
-				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * 5));
-			}
-		}
-		mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsertion * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
-
-		/////////////////////////////////////////////
-
-
-
-		*/
 
 
 
@@ -435,11 +383,11 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		Ogre::Vector3 transVectorInsertion = Ogre::Vector3::ZERO;
 		if (mKeyboard->isKeyDown(OIS::KC_Y)) // Pull back
 		{
-			//transVectorInsertion.z -= mMove;
+			transVectorInsertion.z -= mMove;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_U)) // Insert
 		{
-			//transVectorInsertion.z += mMove;
+			transVectorInsertion.z += mMove;
 		}
 		if (mKeyboard->isKeyDown(OIS::KC_I)) // Roll
 		{
