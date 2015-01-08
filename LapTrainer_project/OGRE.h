@@ -33,7 +33,6 @@ private:
 	virtual void createSceneBase(void);
 	virtual void createScene(void);
 	virtual void createCamera(void);
-	virtual void createLight(void);
 	virtual void createViewports(void);
 	virtual void startOIS(void);
 	virtual void finalTouch(void);

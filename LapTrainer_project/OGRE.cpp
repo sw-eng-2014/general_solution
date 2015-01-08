@@ -66,14 +66,12 @@ void OGREBase::windowClosed(Ogre::RenderWindow* rw)
 //Main function for the setup runs all different setup sequences
 bool OGREBase::setup(void)
 {
-	//Create light added
 	createRoot();
 	loadConfig();
 	if (!generateRenderWindow()) return false;
 	createSceneBase();
 	createScene();
 	createCamera();
-	createLight();
 	createViewports();
 	startOIS();
 	finalTouch();
@@ -154,7 +152,7 @@ void OGREBase::createSceneBase(void)
 		// Create the SceneManager, in this case a generic one
 		mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
 		//Set settings
-		mSceneMgr->setAmbientLight(Ogre::ColourValue(0.0,0.0,0.0));
+		mSceneMgr->setAmbientLight(Ogre::ColourValue(0.8,0.8,0.8));
 		mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
   
 		//Create floor 
@@ -168,7 +166,10 @@ void OGREBase::createSceneBase(void)
 		
 
 		
-
+		// Create a light
+		Ogre::Light* light = mSceneMgr->createLight("BaseLight");
+		light ->setType(Ogre::Light::LT_POINT);
+		light->setPosition(100,100,100);
 
 }
 
@@ -177,17 +178,6 @@ void OGREBase::createSceneBase(void)
 void OGREBase::createScene(void)
 {
 	//Empty function for the creation of the base scene
-}
-
-//-------------------------------------------------------------------------------------
-//Create the scene manager and the default scene 
-void OGREBase::createLight(void)
-{
-		// Create a light
-		Ogre::Light* light = mSceneMgr->createLight("BaseLight");
-		//Change to spot light 
-		light ->setType(Ogre::Light::LT_POINT);
-		mSceneMgr->getSceneNode("cameraInsertion")->attachObject(light);
 }
 //-------------------------------------------------------------------------------------
 //Create the camera

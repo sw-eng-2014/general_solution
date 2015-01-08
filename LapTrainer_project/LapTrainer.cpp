@@ -39,6 +39,8 @@ void LapTrainer::createScene(void)
 		child2->attachObject(entPenguin2);
 		child2->translate(150,0,0);
 
+
+
 }
 //-------------------------------------------------------------------------------------
 //Creation of frame listner
@@ -231,7 +233,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		{
 			transVectorInsertionLeft.x += mMove;
 		}
-
 		// Translate the results to the scenenode
 		//Move node on x-axis for the insertion 
 		mSceneMgr->getSceneNode("MoveNodeLeft")->translate(transVectorInsertionLeft * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
