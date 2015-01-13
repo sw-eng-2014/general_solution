@@ -195,15 +195,8 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 			transVectorInsC.z = (InsCurrentC - mInsC);
 			mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsC, Ogre::Node::TS_LOCAL);
 			mInsC = InsCurrentC;
+
 		}
-
-
-
-
-
-
-
-
 
 	}
 	//-------------------Keyboard movements left node-----------------------------------------------------------------
@@ -426,8 +419,21 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsertion * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
 
 
-
-
+		//-------------------mTrayMgr -----------------------------------------------------------------
+		mTrayMgr->frameRenderingQueued(evt);
+		if (!mTrayMgr->isDialogVisible())
+		{
+        if (mDetailsPanel->isVisible())          // If details panel is visible, then update its contents
+        {
+            mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(mCamera->getDerivedPosition().x));
+            mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mCamera->getDerivedPosition().y));
+            mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(mCamera->getDerivedPosition().z));
+            mDetailsPanel->setParamValue(4, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().w));
+            mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().x));
+            mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().y));
+            mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().z));
+        }
+    }
 	return ret;
 }
 
