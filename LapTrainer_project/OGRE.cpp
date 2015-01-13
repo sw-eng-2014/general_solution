@@ -22,13 +22,15 @@ OGREBase::~OGREBase(void)
 {
 	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
 	windowClosed(mWindow);
+	if (mTrayMgr) delete mTrayMgr;
+	if (mOverlaySystem) delete mOverlaySystem;
 	delete mRoot;
 }
  
 //-------------------------------------------------------------------------------------
 //Go start running the application
 bool OGREBase::OGREgo(void)
-{
+{;
 	return setup();
 }
 
@@ -68,12 +70,14 @@ bool OGREBase::setup(void)
 {
 	createRoot();
 	loadConfig();
+	addOverlay();
 	if (!generateRenderWindow()) return false;
 	createSceneBase();
 	createScene();
 	createCamera();
 	createViewports();
 	startOIS();
+	initSDKTray();
 	finalTouch();
 
 	return true;
@@ -124,6 +128,17 @@ void OGREBase::loadConfig(void)
 		}
 	}
 }
+//-------------------------------------------------------------------------------------
+//Create the overlay for the SDK tray manager
+void OGREBase::addOverlay(void)
+{
+	// Create the SceneManager, in this case a generic one
+	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
+	// Initialize the OverlaySystem 
+    mOverlaySystem = new Ogre::OverlaySystem();
+    mSceneMgr->addRenderQueueListener(mOverlaySystem);
+}
+
 
 //-------------------------------------------------------------------------------------
 bool OGREBase::generateRenderWindow(void)
@@ -149,8 +164,6 @@ bool OGREBase::generateRenderWindow(void)
 //Create the scene manager and the default scene 
 void OGREBase::createSceneBase(void)
 {
-		// Create the SceneManager, in this case a generic one
-		mSceneMgr = mRoot->createSceneManager("DefaultSceneManager");
 		//Set settings
 		mSceneMgr->setAmbientLight(Ogre::ColourValue(0.8,0.8,0.8));
 		mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
@@ -251,6 +264,38 @@ void OGREBase::startOIS(void)
  
 		//Register as a Window listener
 		Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
+
+}
+
+//-------------------------------------------------------------------------------------
+// Create the SDKtray manager
+void OGREBase::initSDKTray(void)
+{
+	mInputContext.mKeyboard = mKeyboard;
+    mInputContext.mMouse = mMouse;
+    mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
+    mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+    mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    mTrayMgr->hideCursor();
+
+    // Create a params panel for displaying sample details
+    Ogre::StringVector items;
+    items.push_back("cam.pX");
+    items.push_back("cam.pY");
+    items.push_back("cam.pZ");
+    items.push_back("");
+    items.push_back("cam.oW");
+    items.push_back("cam.oX");
+    items.push_back("cam.oY");
+    items.push_back("cam.oZ");
+    items.push_back("");
+    items.push_back("Filtering");
+    items.push_back("Poly Mode");
+
+    mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
+    mDetailsPanel->setParamValue(9, "Bilinear");
+    mDetailsPanel->setParamValue(10, "Solid");
+    mDetailsPanel->hide();
 
 }
 

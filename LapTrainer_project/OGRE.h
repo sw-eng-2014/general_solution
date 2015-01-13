@@ -16,8 +16,10 @@
 
 #include <OgreMeshManager.h>
 
+#  include <SdkTrays.h>
 
-class OGREBase : public Ogre::WindowEventListener, public Ogre::FrameListener,  public OIS::KeyListener, public OIS::MouseListener
+
+class OGREBase : public Ogre::WindowEventListener, public Ogre::FrameListener,  public OIS::KeyListener, public OIS::MouseListener, public OgreBites::SdkTrayListener
 {
 public:
     OGREBase(void);
@@ -29,12 +31,14 @@ private:
 	virtual bool setup(void);
 	virtual void createRoot(void);
 	virtual void loadConfig(void);
+	virtual void addOverlay(void);
 	virtual bool generateRenderWindow(void);
 	virtual void createSceneBase(void);
 	virtual void createScene(void);
 	virtual void createCamera(void);
 	virtual void createViewports(void);
 	virtual void startOIS(void);
+	virtual void initSDKTray(void);
 	virtual void finalTouch(void);
 
 protected: 
@@ -64,6 +68,14 @@ protected:
 	Ogre::SceneNode *cameraInsertion;
 	Ogre::Camera* mCamera;
 	bool mCloseApplication; 
+
+	// OgreBites
+    OgreBites::InputContext     mInputContext;
+    OgreBites::SdkTrayManager*	mTrayMgr;
+	Ogre::OverlaySystem*        mOverlaySystem;
+    OgreBites::ParamsPanel*     mDetailsPanel;   	// Sample details panel
+    bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
+    bool                        mShutDown;
 
 	//OIS
 	OIS::InputManager* mInputManager;
