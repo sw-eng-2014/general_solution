@@ -283,9 +283,13 @@ bool OGREBase::frameRenderingQueued(const Ogre::FrameEvent& evt)
 //Key pressed event
 bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
 	
-	if (arg.key == OIS::KC_ESCAPE)  
+	if (arg.key == OIS::KC_ESCAPE)  //Exit program
     {
         mCloseApplication =true;
+    }
+	else if (arg.key == OIS::KC_SYSRQ)   // take a screenshot
+    {
+        mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
     }
 
 	return true;}
