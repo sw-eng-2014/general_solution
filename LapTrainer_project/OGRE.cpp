@@ -295,6 +295,7 @@ void OGREBase::initSDKTray(void)
 	items.push_back("Insertion symball");
     items.push_back("Insertion node");
 
+	//Create details panel
     mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
 	mSelectedElement = 1;
     mDetailsPanel->hide();
@@ -338,15 +339,15 @@ bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
     {
         mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
     }
-	else if (arg.key == OIS::KC_1)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_4)   // toggle visibility of even rarer debugging details
     {
 		mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	}
-	else if (arg.key == OIS::KC_2)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_5)   // toggle visibility of even rarer debugging details
     {
 		mTrayMgr->hideFrameStats();
 	}
-	else if (arg.key == OIS::KC_3)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_6)   // toggle visibility of even rarer debugging details
     {
 		mSelectedElement = 1;
 		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
@@ -355,7 +356,7 @@ bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
 			mDetailsPanel->show();
 		}
 	}
-	else if (arg.key == OIS::KC_4)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_7)   // toggle visibility of even rarer debugging details
     {
 		mSelectedElement = 2;
 		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
@@ -364,7 +365,7 @@ bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
 			mDetailsPanel->show();
 		}
 	}
-	else if (arg.key == OIS::KC_5)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_8)   // toggle visibility of even rarer debugging details
     {
 		mSelectedElement = 3;
 		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
@@ -373,7 +374,7 @@ bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
 			mDetailsPanel->show();
 		}
 	}
-	else if (arg.key == OIS::KC_6)   // toggle visibility of even rarer debugging details
+	else if (arg.key == OIS::KC_9)   // toggle visibility of even rarer debugging details
     {
 		if (mDetailsPanel->getTrayLocation() != OgreBites::TL_NONE)
 			{

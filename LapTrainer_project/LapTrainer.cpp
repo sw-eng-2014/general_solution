@@ -380,6 +380,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		
 		//-------------------Move camera -----------------------------------------------------------------
 		Ogre::Vector3 transVectorInsertion = Ogre::Vector3::ZERO;
+		Ogre::Vector3 transVectorCamera = Ogre::Vector3::ZERO;
 		if (mKeyboard->isKeyDown(OIS::KC_Y)) // Pull back
 		{
 			transVectorInsertion.z -= mMove;
@@ -422,14 +423,48 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 				mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree(mRotate * 5));
 			}
 		}
-		mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsertion * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+		if (mKeyboard->isKeyDown(OIS::KC_C)) // Left - or roll
+		{
+		if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				transVectorCamera.x -= mMove;
+			} 
+		else
+			{
+				transVectorCamera.x += mMove; 
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_V)) // Left - or roll
+		{
+		if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				transVectorCamera.y -= mMove;
+			} 
+		else
+			{
+			transVectorCamera.y += mMove; 
+			}
+		}
+		if (mKeyboard->isKeyDown(OIS::KC_B)) // Left - or roll
+		{
+		if(mKeyboard->isKeyDown( OIS::KC_LSHIFT ))
+			{
+				transVectorCamera.z -= mMove;
+			} 
+		else
+			{
+				transVectorCamera.z += mMove; 
+			}
+		}
 
+		mSceneMgr->getSceneNode("cameraInsertion")->translate(transVectorInsertion * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
+		mSceneMgr->getSceneNode("cameraNode")->translate(transVectorCamera * evt.timeSinceLastFrame, Ogre::Node::TS_LOCAL);
 
 		//-------------------mTrayMgr -----------------------------------------------------------------
 		mTrayMgr->frameRenderingQueued(evt);
 		if (!mTrayMgr->isDialogVisible())
 		{
-        if (mDetailsPanel->isVisible())          // If details panel is visible, then update its contents
+        if (mDetailsPanel->isVisible())// If details panel is visible, then update its contents
         {
 			if (mSelectedElement == 1)
 			{
@@ -446,13 +481,55 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 				//Get if possible symball values
 				if (!mNoSimballConnected)
 				{
-					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mRotC));
+					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchC));
 					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotC));
-					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mRotC));
-					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mRotC));;
+					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawC));
+					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsC));;
 				}
-
 			}
+			if (mSelectedElement == 2)
+			{
+				Ogre::Quaternion Quat = mSceneMgr->getSceneNode("LeftNode")->getOrientation();
+				mDetailsPanel->setParamValue(0, "Stick left");
+				mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("LeftNode")->getPosition().x));
+				mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("LeftNode")->getPosition().y));
+				mDetailsPanel->setParamValue(3, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("LeftNode")->getPosition().z));
+				//Get scene node values
+				mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(Quat.getPitch()));
+				mDetailsPanel->setParamValue(9, Ogre::StringConverter::toString(Quat.getYaw()));
+				mDetailsPanel->setParamValue(12, Ogre::StringConverter::toString(Quat.getRoll()));
+				mDetailsPanel->setParamValue(15, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("MoveNodeLeft")->getPosition().x));
+				//Get if possible symball values
+				if (!mNoSimballConnected)
+				{
+					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchC));
+					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotC));
+					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawC));
+					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsC));;
+				}
+			}
+			if (mSelectedElement == 3)
+			{
+				Ogre::Quaternion Quat = mSceneMgr->getSceneNode("RightNode")->getOrientation();
+				mDetailsPanel->setParamValue(0, "Stick right");
+				mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("RightNode")->getPosition().x));
+				mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("RightNode")->getPosition().y));
+				mDetailsPanel->setParamValue(3, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("RightNode")->getPosition().z));
+				//Get scene node values
+				mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(Quat.getPitch()));
+				mDetailsPanel->setParamValue(9, Ogre::StringConverter::toString(Quat.getYaw()));
+				mDetailsPanel->setParamValue(12, Ogre::StringConverter::toString(Quat.getRoll()));
+				mDetailsPanel->setParamValue(15, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("MoveNodeRight")->getPosition().x));
+				//Get if possible symball values
+				if (!mNoSimballConnected)
+				{
+					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchC));
+					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotC));
+					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawC));
+					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsC));;
+				}
+			}
+
         }
     }
 	return ret;
