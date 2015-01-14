@@ -274,27 +274,30 @@ void OGREBase::initSDKTray(void)
 	mInputContext.mKeyboard = mKeyboard;
     mInputContext.mMouse = mMouse;
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
-    mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     mTrayMgr->hideCursor();
 
     // Create a params panel for displaying sample details
     Ogre::StringVector items;
-    items.push_back("cam.pX");
-    items.push_back("cam.pY");
-    items.push_back("cam.pZ");
+	items.push_back("Item");
+    items.push_back("X");
+    items.push_back("Y");
+    items.push_back("Z");
     items.push_back("");
-    items.push_back("cam.oW");
-    items.push_back("cam.oX");
-    items.push_back("cam.oY");
-    items.push_back("cam.oZ");
+    items.push_back("Pitch symball");
+	items.push_back("Pitch node");
+	items.push_back("");
+    items.push_back("Yaw symball");
+	items.push_back("Yaw node");
+	items.push_back("");
+    items.push_back("Roll symball");
+	items.push_back("Roll node");//12
     items.push_back("");
-    items.push_back("Filtering");
-    items.push_back("Poly Mode");
+	items.push_back("Insertion symball");
+    items.push_back("Insertion node");
 
     mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(9, "Bilinear");
-    mDetailsPanel->setParamValue(10, "Solid");
-    //mDetailsPanel->hide();
+	mSelectedElement = 1;
+    mDetailsPanel->hide();
 
 }
 
@@ -335,7 +338,49 @@ bool OGREBase::keyPressed(const OIS::KeyEvent &arg){
     {
         mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
     }
-
+	else if (arg.key == OIS::KC_1)   // toggle visibility of even rarer debugging details
+    {
+		mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	}
+	else if (arg.key == OIS::KC_2)   // toggle visibility of even rarer debugging details
+    {
+		mTrayMgr->hideFrameStats();
+	}
+	else if (arg.key == OIS::KC_3)   // toggle visibility of even rarer debugging details
+    {
+		mSelectedElement = 1;
+		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
+			{
+			mTrayMgr->moveWidgetToTray(mDetailsPanel, OgreBites::TL_TOPRIGHT, 0);
+			mDetailsPanel->show();
+		}
+	}
+	else if (arg.key == OIS::KC_4)   // toggle visibility of even rarer debugging details
+    {
+		mSelectedElement = 2;
+		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
+			{
+			mTrayMgr->moveWidgetToTray(mDetailsPanel, OgreBites::TL_TOPRIGHT, 0);
+			mDetailsPanel->show();
+		}
+	}
+	else if (arg.key == OIS::KC_5)   // toggle visibility of even rarer debugging details
+    {
+		mSelectedElement = 3;
+		if (mDetailsPanel->getTrayLocation() == OgreBites::TL_NONE)
+			{
+			mTrayMgr->moveWidgetToTray(mDetailsPanel, OgreBites::TL_TOPRIGHT, 0);
+			mDetailsPanel->show();
+		}
+	}
+	else if (arg.key == OIS::KC_6)   // toggle visibility of even rarer debugging details
+    {
+		if (mDetailsPanel->getTrayLocation() != OgreBites::TL_NONE)
+			{
+			mTrayMgr->removeWidgetFromTray(mDetailsPanel);
+            mDetailsPanel->hide();
+		}
+	}
 	return true;}
 
 //-------------------------------------------------------------------------------------

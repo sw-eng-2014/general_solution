@@ -72,6 +72,23 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 	bool currMouse = mMouse->getMouseState().buttonDown(OIS::MB_Left);
 	bool ret = OGREBase::frameRenderingQueued(evt);
 
+	//Declare variables
+	static int mYawL = 0;
+	static int mPitchL = 0;
+	static int mRotL = 0;
+	static int mInsL = 0;
+	//
+	static int mYawR = 0;
+	static int mPitchR = 0;
+	static int mRotR = 0;
+	static int mInsR = 0;
+	//
+	static int mYawC = 0;
+	static int mPitchC = 0;
+	static int mRotC = 0;
+	static int mInsC = 0;
+
+
 	if (!mNoSimballConnected) //Check if connected otherwise ignore
 	{
 		//--------------------------------Get Simballs values--------------------------------------------
@@ -82,7 +99,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 		//-------------------Left Stick-----------------------------------------------------------------
 		//Yaw
-		static int mYawL = 0;
 		int YawCurrentL = simball_Left.AYaw;
 		//Calculate yaw difference
 		if (YawCurrentL != mYawL){
@@ -91,7 +107,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Pitch
-		static int mPitchL = 0;
 		int PitchCurrentL = simball_Left.APitch;
 		//Calculate pitch difference
 		if (PitchCurrentL != mPitchL){
@@ -100,7 +115,7 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Roll
-		static int mRotL = 0;
+
 		int RotCurrentL = simball_Left.ARotation;
 		//Calculate rotation difference
 		if (RotCurrentL != mRotL){
@@ -109,7 +124,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Insertion
-		static int mInsL = 0;
 		Ogre::Vector3 transVectorSbL = Ogre::Vector3::ZERO;
 		int InsCurrentL = (simball_Left.AInsertion-228)*1;
 		//Calculate rotation difference
@@ -121,7 +135,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
  
 		//-------------------Right Stick-----------------------------------------------------------------
 		//Yaw
-		static int mYawR = 0;
 		int YawCurrentR = simball_Right.AYaw;
 		//Calculate yaw difference
 		if (YawCurrentR != mYawR){
@@ -130,7 +143,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Pitch
-		static int mPitchR = 0;
 		int PitchCurrentR = simball_Right.APitch;
 		//Calculate pitch difference
 		if (PitchCurrentR != mPitchR){
@@ -139,7 +151,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Roll
-		static int mRotR = 0;
 		int RotCurrentR = (simball_Right.ARotation-228)*-2;
 		//Calculate rotation difference
 		if (RotCurrentR != mRotR){
@@ -148,7 +159,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Insertion
-		static int mInsR = 0;
 		Ogre::Vector3 transVectorSbR = Ogre::Vector3::ZERO;
 		int InsCurrentR = (simball_Right.AInsertion-228)*1;
 		//Calculate rotation difference
@@ -163,7 +173,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		
 
 		//Yaw
-		static int mYawC = 0;
 		int YawCurrentC = simball_camera.AYaw;
 		if (YawCurrentC != mYawC){
 			mSceneMgr->getSceneNode("cameraNode")->yaw(Ogre::Degree((YawCurrentC - mYawC)));
@@ -172,7 +181,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 		
 		//Pitch
-		static int mPitchC = 0;
 		int PitchCurrentC = simball_camera.APitch;
 		if (PitchCurrentC != mPitchC){
 			mSceneMgr->getSceneNode("cameraNode")->pitch(Ogre::Degree((PitchCurrentC - mPitchC)));
@@ -180,7 +188,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 
 		//Roll //It works but it moves like mirror sometimes. It doesn't work well
-		static int mRotC = 0;
 		int RotCurrentC = (simball_camera.ARotation*-1)+179;
 		if (RotCurrentC != mRotC){
 			mSceneMgr->getSceneNode("cameraNode")->roll(Ogre::Degree((RotCurrentC - mRotC))*-1.00);	//Changed to -1.0 instead of -0.09
@@ -188,7 +195,6 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 		 
 		//Insertion //It's not working, we don't know why
-		static int mInsC = 0;
 		Ogre::Vector3 transVectorInsC = Ogre::Vector3::ZERO;
 		int InsCurrentC = (simball_camera.AInsertion-228)*-2;
 		if (InsCurrentC != mInsC){
@@ -425,13 +431,28 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		{
         if (mDetailsPanel->isVisible())          // If details panel is visible, then update its contents
         {
-            mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(mCamera->getDerivedPosition().x));
-            mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mCamera->getDerivedPosition().y));
-            mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(mCamera->getDerivedPosition().z));
-            mDetailsPanel->setParamValue(4, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().w));
-            mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().x));
-            mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().y));
-            mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().z));
+			if (mSelectedElement == 1)
+			{
+				Ogre::Quaternion Quat = mSceneMgr->getSceneNode("cameraNode")->getOrientation();
+				mDetailsPanel->setParamValue(0, "Camera");
+				mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("cameraNode")->getPosition().x));
+				mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("cameraNode")->getPosition().y));
+				mDetailsPanel->setParamValue(3, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("cameraNode")->getPosition().z));
+				//Get scene node values
+				mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(Quat.getPitch()));
+				mDetailsPanel->setParamValue(9, Ogre::StringConverter::toString(Quat.getYaw()));
+				mDetailsPanel->setParamValue(12, Ogre::StringConverter::toString(Quat.getRoll()));
+				mDetailsPanel->setParamValue(15, Ogre::StringConverter::toString(mSceneMgr->getSceneNode("cameraInsertion")->getPosition().z));
+				//Get if possible symball values
+				if (!mNoSimballConnected)
+				{
+					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mRotC));
+					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotC));
+					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mRotC));
+					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mRotC));;
+				}
+
+			}
         }
     }
 	return ret;

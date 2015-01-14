@@ -73,10 +73,9 @@ protected:
     OgreBites::InputContext     mInputContext;
     OgreBites::SdkTrayManager*	mTrayMgr;
 	Ogre::OverlaySystem*        mOverlaySystem;
-    OgreBites::ParamsPanel*     mDetailsPanel;   	// Sample details panel
-    bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
-    bool                        mShutDown;
-
+    OgreBites::ParamsPanel*     mDetailsPanel;  
+	OgreBites::ParamsPanel*     mDetailsPanel2;   	
+	int							mSelectedElement;
 	//OIS
 	OIS::InputManager* mInputManager;
 	OIS::Mouse*    mMouse;
