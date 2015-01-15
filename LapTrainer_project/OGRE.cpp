@@ -202,7 +202,7 @@ void OGREBase::createCamera(void)
 		mCamera = mSceneMgr->createCamera("PlayerCam");
  
 		// Position it at 80 in Z direction
-		mCamera->setPosition(Ogre::Vector3(0,500,750));
+		mCamera->setPosition(Ogre::Vector3(0,500,500));
 		// Look back along -Z
 		mCamera->lookAt(Ogre::Vector3(0,0,0));
 		mCamera->setNearClipDistance(5);*/
@@ -218,12 +218,14 @@ void OGREBase::createCamera(void)
 		mCamera->setNearClipDistance(5);
 		// Create the camera's top node (which will only handle position).
 		cameraNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("cameraNode");
-		cameraNode->setPosition(0, 1000, 1000);
+		cameraNode->setPosition(0, 700, 700);
 
 		cameraNode->pitch(Ogre::Degree(-45));
 		// Create the camera's yaw node as a child of camera's top node.
 		cameraInsertion = cameraNode->createChildSceneNode("cameraInsertion");
 		cameraInsertion->attachObject(mCamera);
+		
+
 }
 
 //-------------------------------------------------------------------------------------

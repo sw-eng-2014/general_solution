@@ -25,7 +25,10 @@ void LapTrainer::createScene(void)
 		//Create right stick
 		Ogre::Entity* StickRight = mSceneMgr->createEntity("StickRight", "instrument_stick.mesh");
 		StickRight -> setCastShadows(true);
-		Ogre::SceneNode* RightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("RightNode", Ogre::Vector3(300, 100, 100));
+		Ogre::SceneNode* RightNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("RightNode", Ogre::Vector3(0,0,0),Ogre::Quaternion(1,0,0,0));
+		//RightNode->setPosition(Ogre::Vector3(300, 100, 100));
+		RightNode->setPosition(Ogre::Vector3(300, 500, 500));//alex
+		RightNode->setOrientation(0.383022, -0.383022, 0.821394, -0.178606);//alex
 		RightNode->scale( 1, 1, 1); 
 		Ogre::SceneNode* child = RightNode->createChildSceneNode("MoveNodeRight");
 		child->attachObject(StickRight);
@@ -33,7 +36,10 @@ void LapTrainer::createScene(void)
 
 		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("StickLeft", "instrument_stick.mesh");
 		entPenguin2 -> setCastShadows(true);
-		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("LeftNode", Ogre::Vector3(-300, 100, 100));
+		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("LeftNode", Ogre::Vector3(0,0,0),Ogre::Quaternion(1,0,0,0));
+		//nodPenguin2->setPosition(Ogre::Vector3(-300, 100, 100));
+		nodPenguin2->setPosition(Ogre::Vector3(-300, 500, 500));//alex
+		nodPenguin2->setOrientation(0.821394, -0.178606, 0.383022, -0.383022);//alex //this stick is not working
 		nodPenguin2->scale( 1, 1, 1); 
 		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNodeLeft");
 		child2->attachObject(entPenguin2);
@@ -41,7 +47,7 @@ void LapTrainer::createScene(void)
 
 		Ogre::Entity* Element1 = mSceneMgr->createEntity("Element1", "exercise1.mesh");//Place your mesh here
 		Element1 -> setCastShadows(true);
-		Ogre::SceneNode* Element1Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element1Node", Ogre::Vector3(100, -200, 100));//X-Y-ZX
+		Ogre::SceneNode* Element1Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element1Node", Ogre::Vector3(0, -200, 100));//X-Y-ZX
 		Element1Node->scale( 400, 400, 400); 
 		Element1Node->attachObject(Element1);
 
@@ -175,9 +181,9 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		}
 	
 	//-------------------Camera Stick-----------------------------------------------------------------
-		////////////////////////////////
-		
-
+		//Fixed camera (comment next lines)
+		/*
+		//Must be uncommented if we want a moving camera
 		//Yaw
 		int YawCurrentC = simball_camera.AYaw;
 		if (YawCurrentC != mYawC){
@@ -209,8 +215,9 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 			mInsC = InsCurrentC;
 
 		}
-
+		*/
 	}
+	
 	//-------------------Keyboard movements left node-----------------------------------------------------------------
 	//More information of the shorcuts of OIS: https://code.google.com/p/ezonas/source/browse/Ogrish/OIS-keycodes.txt?spec=svn92d08c346e48025efafc980557ee738ab0bd6ecd&r=92d08c346e48025efafc980557ee738ab0bd6ecd
 	Ogre::Vector3 transVectorLeft = Ogre::Vector3::ZERO;
@@ -508,10 +515,10 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 				//Get if possible symball values
 				if (!mNoSimballConnected)
 				{
-					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchC));
-					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotC));
-					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawC));
-					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsC));;
+					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchR));
+					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotR));
+					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawR));
+					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsR));;
 				}
 			}
 			if (mSelectedElement == 3)
@@ -529,10 +536,10 @@ bool LapTrainer::frameRenderingQueued(const Ogre::FrameEvent& evt)
 				//Get if possible symball values
 				if (!mNoSimballConnected)
 				{
-					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchC));
-					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotC));
-					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawC));
-					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsC));;
+					mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mPitchL));
+					mDetailsPanel->setParamValue(8, Ogre::StringConverter::toString(mRotL));
+					mDetailsPanel->setParamValue(11, Ogre::StringConverter::toString(mYawL));
+					mDetailsPanel->setParamValue(13, Ogre::StringConverter::toString(mInsL));;
 				}
 			}
 
