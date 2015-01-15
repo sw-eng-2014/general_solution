@@ -39,6 +39,12 @@ void LapTrainer::createScene(void)
 		child2->attachObject(entPenguin2);
 		child2->translate(0,0,0);
 
+		Ogre::Entity* Element1 = mSceneMgr->createEntity("Element1", "exercise1.mesh");//Place your mesh here
+		Element1 -> setCastShadows(true);
+		Ogre::SceneNode* Element1Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element1Node", Ogre::Vector3(100, -200, 100));//X-Y-ZX
+		Element1Node->scale( 400, 400, 400); 
+		Element1Node->attachObject(Element1);
+
 
 
 }

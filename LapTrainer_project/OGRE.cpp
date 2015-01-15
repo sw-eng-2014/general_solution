@@ -202,7 +202,7 @@ void OGREBase::createCamera(void)
 		mCamera = mSceneMgr->createCamera("PlayerCam");
  
 		// Position it at 80 in Z direction
-		mCamera->setPosition(Ogre::Vector3(0,500,500));
+		mCamera->setPosition(Ogre::Vector3(0,500,750));
 		// Look back along -Z
 		mCamera->lookAt(Ogre::Vector3(0,0,0));
 		mCamera->setNearClipDistance(5);*/
