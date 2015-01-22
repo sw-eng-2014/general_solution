@@ -34,11 +34,14 @@ void LapTrainer::createScene(void)
 		child->attachObject(StickRight);
 		child->translate(0,0,0);
 
+
+		//Create left stick
 		Ogre::Entity* entPenguin2 = mSceneMgr->createEntity("StickLeft", "instrument_stick.mesh");
 		entPenguin2 -> setCastShadows(true);
 		Ogre::SceneNode* nodPenguin2 = mSceneMgr->getRootSceneNode()->createChildSceneNode("LeftNode", Ogre::Vector3(0,0,0),Ogre::Quaternion(1,0,0,0));
 		//nodPenguin2->setPosition(Ogre::Vector3(-300, 100, 100));
 		nodPenguin2->setPosition(Ogre::Vector3(-300, 500, 500));//alex
+		//nodPenguin2->setOrientation(0.821394, -0.178606, 0.383022, -0.383022);//alex //this stick is not working
 		nodPenguin2->setOrientation(0.821394, -0.178606, 0.383022, -0.383022);//alex //this stick is not working
 		nodPenguin2->scale( 1, 1, 1); 
 		Ogre::SceneNode* child2 = nodPenguin2->createChildSceneNode("MoveNodeLeft");
@@ -47,10 +50,27 @@ void LapTrainer::createScene(void)
 
 		Ogre::Entity* Element1 = mSceneMgr->createEntity("Element1", "exercise1.mesh");//Place your mesh here
 		Element1 -> setCastShadows(true);
-		Ogre::SceneNode* Element1Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element1Node", Ogre::Vector3(0, -200, 100));//X-Y-ZX
+		Ogre::SceneNode* Element1Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element1Node", Ogre::Vector3(0, -200, 200));//X-Y-Z
 		Element1Node->scale( 400, 400, 400); 
 		Element1Node->attachObject(Element1);
 
+		Ogre::Entity* Element2 = mSceneMgr->createEntity("Element2", "Sphere002.mesh");//Place your mesh here
+		Element2 -> setCastShadows(true);
+		//Ogre::SceneNode* Element2Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element2Node", Ogre::Vector3(0, 50, 100));//X-Y-Z
+		Ogre::SceneNode* Element2Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element2Node", Ogre::Vector3(0,0,0),Ogre::Quaternion(1,0,0,0));
+		Element2Node->setPosition(Ogre::Vector3(300, 500, 500));
+		Element2Node->setOrientation(0.383022, -0.383022, 0.821394, -0.178606);
+		Element2Node->scale( 60, 60, 60); 
+		Element2Node->attachObject(Element2);
+
+		Ogre::Entity* Element3 = mSceneMgr->createEntity("Element3", "Sphere002.mesh");//Place your mesh here
+		Element3 -> setCastShadows(true);
+		//Ogre::SceneNode* Element2Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element2Node", Ogre::Vector3(0, 50, 100));//X-Y-Z
+		Ogre::SceneNode* Element3Node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Element3Node", Ogre::Vector3(0,0,0),Ogre::Quaternion(1,0,0,0));
+		Element3Node->setPosition(Ogre::Vector3(-300, 500, 500));
+		Element3Node->setOrientation(0.821394, -0.178606, 0.383022, -0.383022);
+		Element3Node->scale( 60, 60, 60); 
+		Element3Node->attachObject(Element3);
 
 
 }
